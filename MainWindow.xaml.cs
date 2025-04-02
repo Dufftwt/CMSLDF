@@ -15,10 +15,13 @@ namespace CMSLDF
         {
             InitializeComponent();
             // Optional: Pre-load the initial view if needed
-            // LoadInitialView();
+            LoadInitialView();
         }
 
-        // private void LoadInitialView() ... // Same as before
+        private void LoadInitialView()
+        {
+            NavigateTo(NavCamionsRadioButton);
+        }
 
         private void NavigationRadioButton_Checked(object sender, RoutedEventArgs e)
         {

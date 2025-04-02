@@ -1,12 +1,68 @@
 ﻿<UserControl x:Class="CMSLDF.CamionsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CMSLDF"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="400">
+    <!-- Set DataContext in code-behind -->
+
+    <Grid Background="LightGray">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <!-- ItemsControl is used to display a list of things -->
+            <!-- ItemsSource points to the collection of data in our code -->
+            <ItemsControl x:Name="VehiculesItemsControl">
+                <!-- How the list items themselves should be arranged (vertically) -->
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <!-- This template defines WHAT EACH ITEM in the list looks like -->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:VehiculeBasic}">
+                        <!-- Simple border around each item -->
+                        <Border BorderBrush="DarkGray" BorderThickness="1" Margin="10" Padding="10" Background="White">
+                            <!-- Stack things vertically inside the border -->
+                            <StackPanel Orientation="Vertical">
+                                <!-- Display the Image -->
+                                <!-- Source={Binding Image} means: get the 'Image' property from the current VehiculeBasic object -->
+                                <Image Source="{Binding Image}" MaxHeight="100" Margin="0,0,0,5" HorizontalAlignment="Left"/>
+
+                                <!-- Display the Name -->
+                                <!-- Text={Binding Nom} means: get the 'Nom' property from the current VehiculeBasic object -->
+                                <TextBlock Text="{Binding Nom}" FontWeight="Bold" FontSize="14" />
+
+                                <!-- Display the Size -->
+                                <TextBlock>
+                                    <Run Text="Taille: "/>
+                                    <Run Text="{Binding Taille}"/>
+                                </TextBlock>
+
+                                <!-- Display the Details -->
+                                <TextBlock Text="{Binding Details}" TextWrapping="Wrap" Margin="0,5,0,10"/>
+
+                                <!-- Area for Buttons -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <!-- Modifier Button -->
+                                    <!-- The Click event calls a method in our code-behind -->
+                                    <!-- Tag="{Binding}" stores the ACTUAL VehiculeBasic object associated with this button -->
+                                    <Button Content="Modifier" Margin="0,0,5,0"
+                                            Click="ModifyButton_Click"
+                                            Tag="{Binding}"/>
+
+                                    <!-- Supprimer Button -->
+                                    <Button Content="Supprimer" Background="IndianRed" Foreground="White"
+                                            Click="DeleteButton_Click"
+                                            Tag="{Binding}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
