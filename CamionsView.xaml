@@ -8,7 +8,83 @@
              d:DesignHeight="600" d:DesignWidth="400">
     <!-- Set DataContext in code-behind -->
 
-    <Grid Background="LightGray">
+    <UserControl.Resources>
+        <!-- Style for the Modify Button with Custom Template -->
+        <Style x:Key="ModifyButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <!-- Use a Border to represent the button's background -->
+                        <Border x:Name="ButtonBorder"
+                                Background="RoyalBlue"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="0">
+                            <!-- Optional: Small corner radius -->
+                            <!-- ContentPresenter displays the Button's Content ("Modifier") -->
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <!-- Define what happens on Hover using Template Triggers -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!-- Set the Border's Background on hover -->
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#2c4ca0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#2c4ca0"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="LightGray"/>
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!-- Set Foreground color here, as it applies to the ContentPresenter -->
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <!-- Style for the Delete Button with Custom Template -->
+        <Style x:Key="DeleteButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="Crimson"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#a80e26"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#a80e26"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="LightGray"/>
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="White">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <!-- ItemsControl is used to display a list of things -->
             <!-- ItemsSource points to the collection of data in our code -->
@@ -24,12 +100,12 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:VehiculeBasic}">
                         <!-- Simple border around each item -->
-                        <Border BorderBrush="DarkGray" BorderThickness="1" Margin="10" Padding="10" Background="White">
+                        <Border BorderBrush="DarkGray" BorderThickness="1" Margin="10" Padding="10" Background="White" CornerRadius="8">
                             <!-- Stack things vertically inside the border -->
                             <StackPanel Orientation="Vertical">
                                 <!-- Display the Image -->
                                 <!-- Source={Binding Image} means: get the 'Image' property from the current VehiculeBasic object -->
-                                <Image Source="{Binding Image}" MaxHeight="100" Margin="0,0,0,5" HorizontalAlignment="Left"/>
+                                <!-- <Image Source="{Binding Image}" MaxHeight="100" Margin="0,0,0,5" HorizontalAlignment="Left"/> -->
 
                                 <!-- Display the Name -->
                                 <!-- Text={Binding Nom} means: get the 'Nom' property from the current VehiculeBasic object -->
@@ -49,12 +125,12 @@
                                     <!-- Modifier Button -->
                                     <!-- The Click event calls a method in our code-behind -->
                                     <!-- Tag="{Binding}" stores the ACTUAL VehiculeBasic object associated with this button -->
-                                    <Button Content="Modifier" Margin="0,0,5,0"
+                                    <Button Content="Modifier" Margin="0,0,5,0" Style="{StaticResource ModifyButtonStyle}"
                                             Click="ModifyButton_Click"
                                             Tag="{Binding}"/>
 
                                     <!-- Supprimer Button -->
-                                    <Button Content="Supprimer" Background="IndianRed" Foreground="White"
+                                    <Button Content="Supprimer" Style="{StaticResource DeleteButtonStyle}"
                                             Click="DeleteButton_Click"
                                             Tag="{Binding}"/>
                                 </StackPanel>
