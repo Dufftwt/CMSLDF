@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls; // Needed for TextBlock, RadioButton
+using System.Windows.Controls;
 
 namespace CMSLDF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        // Keep references to potentially reuse views (optional optimization)
+        private CamionsView _camionsView;
+        private DepotVenteView _depotVenteView;
+        private InfosView _infosView;
+
         public MainWindow()
         {
             InitializeComponent();
-            LoadInitialView();
+            // Optional: Pre-load the initial view if needed
+            // LoadInitialView();
         }
 
-        private void LoadInitialView()
-        {
-            if (NavCamionsRadioButton.IsChecked == true)
-            {
-                NavigateTo(NavCamionsRadioButton);
-            }
-        }
+        // private void LoadInitialView() ... // Same as before
 
         private void NavigationRadioButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -33,55 +30,42 @@ namespace CMSLDF
 
         private void NavigateTo(RadioButton target)
         {
-            // Prevent null reference exceptions if called before elements are loaded
             if (HeaderTitleTextBlock == null || MainContentArea == null)
             {
                 return;
             }
 
             string newTitle = "Unknown";
-            object newContent = null; // Use object type for flexibility
+            object newContent = null; // Content type is now UserControl (or object)
 
             if (target == NavCamionsRadioButton)
             {
                 newTitle = "Nos camions";
-                // Replace with actual UserControl: new CamionsView();
-                newContent = new TextBlock
-                {
-                    Text = "Contenu - Nos camions",
-                    FontSize = 24,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
+                // *** MODIFIED: Instantiate or reuse CamionsView ***
+                if (_camionsView == null) // Create only if it doesn't exist
+                    _camionsView = new CamionsView();
+                newContent = _camionsView;
             }
             else if (target == NavDepotVenteRadioButton)
             {
                 newTitle = "Dépôt-Vente";
-                // Replace with actual UserControl: new DepotVenteView();
-                newContent = new TextBlock
-                {
-                    Text = "Contenu - Dépôt-Vente",
-                    FontSize = 24,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
+                // *** MODIFIED: Instantiate or reuse DepotVenteView ***
+                if (_depotVenteView == null)
+                    _depotVenteView = new DepotVenteView();
+                newContent = _depotVenteView;
             }
             else if (target == NavInfosRadioButton)
             {
                 newTitle = "Nos infos";
-                // Replace with actual UserControl: new InfosView();
-                newContent = new TextBlock
-                {
-                    Text = "Contenu - Nos infos",
-                    FontSize = 24,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
+                // *** MODIFIED: Instantiate or reuse InfosView ***
+                if (_infosView == null)
+                    _infosView = new InfosView();
+                newContent = _infosView;
             }
 
             // Update the UI elements
             HeaderTitleTextBlock.Text = newTitle;
-            MainContentArea.Content = newContent;
+            MainContentArea.Content = newContent; // Set the ContentControl's content
         }
     }
 }

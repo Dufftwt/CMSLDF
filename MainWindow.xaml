@@ -65,8 +65,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- Placeholder for Logo -->
-            <Border Grid.Column="0" Background="#FFE0E0E0" CornerRadius="5" Margin="10,0" VerticalAlignment="Center">
-                <TextBlock Text="[Loueurs de France LOGO]" Padding="30,15" Foreground="#FF555555" FontSize="10"/>
+            <Border Grid.Column="0" Background="#FFF" CornerRadius="5" Margin="10,0" VerticalAlignment="Center">
+                <Image Grid.Column="0" Source="/Assets/logo.png" Height="60" VerticalAlignment="Center" Margin="10,0"/>
             </Border>
 
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0,0,0">
