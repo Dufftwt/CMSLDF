@@ -24,9 +24,6 @@ namespace CMSLDF
 
     public partial class CamionsView : UserControl
     {
-
-
-
         private static readonly HttpClient httpClient = new HttpClient();
         private const string ApiUrl = "https://loueursdefrance.com/api/db/vehiculelocations";
 
@@ -91,19 +88,48 @@ namespace CMSLDF
 
         private void ModifyButton_Click(object sender, RoutedEventArgs e)
         {
-            // 'sender' is the actual Button that was clicked
             Button clickedButton = sender as Button;
             if (clickedButton != null)
             {
-                // Retrieve the VehiculeBasic object we stored in the Tag property in XAML
+                // Retrieve the VehiculeBasic object from the Tag property
                 VehiculeBasic itemToModify = clickedButton.Tag as VehiculeBasic;
 
                 if (itemToModify != null)
                 {
-                    // Now you know which truck needs modification!
                     Debug.WriteLine($"Modify clicked for: {itemToModify.Nom}");
-                    MessageBox.Show($"Modify: {itemToModify.Nom}\nDetails: {itemToModify.Details}", "Modify Item");
-                    // TODO: Add your actual modification logic here (e.g., open a new window)
+
+                    // --- Modification Window Logic ---
+                    // 1. Créer une instance de la nouvelle fenêtre
+                    ModifyVehicleWindow modifyWindow = new ModifyVehicleWindow(itemToModify);
+
+                    // mettre notre fenêtre ici le owner
+                    modifyWindow.Owner = Window.GetWindow(this); // 'this' refers to CamionsView UserControl/Window
+
+                    // faire en sorte que modifyWindow soit un dialog, ce qui devrait pauser l'execution derriere
+                    bool? result = modifyWindow.ShowDialog();
+
+                    // 4. (Optional but Recommended) Check the result after the window closes.
+                    //    We set DialogResult = true in ModifyVehicleWindow's SaveButton_Click.
+                    if (result == true)
+                    {
+                        // The user clicked "Save" in the modify window.
+                        Debug.WriteLine($"Changes saved for {itemToModify.Nom}.");
+
+                        MessageBox.Show($"'{itemToModify.Nom}' a été modifé localement.\n", "Modification Complete");
+
+                        // Reload la page depuis le cache
+                        VehiculesItemsControl.ItemsSource = null;
+                        VehiculesItemsControl.ItemsSource = AllVehicules; 
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"Modification annulée pour {itemToModify.Nom}.");
+                    }
+                    // --- End Modification Window Logic ---
+                }
+                else
+                {
+                    Debug.WriteLine("ModifyButton clicked, but Tag was not a VehiculeBasic object.");
                 }
             }
         }
