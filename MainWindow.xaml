@@ -133,7 +133,7 @@
 
                     <!-- Navigation Item 3: Nos infos -->
                     <!-- **** MODIFIED: Added x:Name and Checked event **** -->
-                    <RadioButton x:Name="NavInfosRadioButton"
+                    <!--<RadioButton x:Name="NavInfosRadioButton"
                                  Style="{StaticResource NavButtonStyle}"
                                  GroupName="Navigation"
                                  Checked="NavigationRadioButton_Checked">
@@ -141,7 +141,8 @@
                             <TextBlock FontFamily="Segoe MDL2 Assets" Text="" FontSize="20" VerticalAlignment="Center"/>
                             <TextBlock Text="Nos infos" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="16"/>
                         </StackPanel>
-                    </RadioButton>
+                    </RadioButton>-->
+                    
 
                 </StackPanel>
             </Border>

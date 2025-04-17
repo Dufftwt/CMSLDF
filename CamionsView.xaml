@@ -9,29 +9,18 @@
     <!-- Set DataContext in code-behind -->
 
     <UserControl.Resources>
-        <!-- Style for the Modify Button with Custom Template -->
+        <!-- Style for the Modify Button -->
         <Style x:Key="ModifyButtonStyle" TargetType="Button">
             <Setter Property="Padding" Value="8,6"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <!-- Use a Border to represent the button's background -->
-                        <Border x:Name="ButtonBorder"
-                                Background="RoyalBlue"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="0">
-                            <!-- Optional: Small corner radius -->
-                            <!-- ContentPresenter displays the Button's Content ("Modifier") -->
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              Margin="{TemplateBinding Padding}"/>
+                        <Border x:Name="ButtonBorder" Background="RoyalBlue" BorderBrush="Transparent" BorderThickness="1" CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                         </Border>
-                        <!-- Define what happens on Hover using Template Triggers -->
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <!-- Set the Border's Background on hover -->
                                 <Setter TargetName="ButtonBorder" Property="Background" Value="#2c4ca0"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
@@ -45,25 +34,18 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <!-- Set Foreground color here, as it applies to the ContentPresenter -->
             <Setter Property="Foreground" Value="White"/>
         </Style>
 
-        <!-- Style for the Delete Button with Custom Template -->
+        <!-- Style for the Delete Button -->
         <Style x:Key="DeleteButtonStyle" TargetType="Button">
             <Setter Property="Padding" Value="8,6"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="ButtonBorder"
-                                Background="Crimson"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="0">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              Margin="{TemplateBinding Padding}"/>
+                        <Border x:Name="ButtonBorder" Background="Crimson" BorderBrush="Transparent" BorderThickness="1" CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -82,54 +64,102 @@
             </Setter>
             <Setter Property="Foreground" Value="White"/>
         </Style>
+
+        <!-- Style for the Seed Button -->
+        <Style x:Key="SeedButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="ForestGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#1a6a1a"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#145214"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="LightGray"/>
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- **** NEW STYLE: Style for the Create Button **** -->
+        <Style x:Key="CreateButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#009DDC"/>
+            <!-- Distinct color -->
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#007DDC"/>
+                                <!-- Darker SeaGreen -->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#006DDD"/>
+                                <!-- Even Darker SeaGreen -->
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="LightGray"/>
+                                <Setter Property="Foreground" Value="DarkGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </UserControl.Resources>
 
     <Grid Background="White">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <!-- ItemsControl is used to display a list of things -->
-            <!-- ItemsSource points to the collection of data in our code -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Existing ScrollViewer now in Grid Row 0 -->
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <ItemsControl x:Name="VehiculesItemsControl">
-                <!-- How the list items themselves should be arranged (vertically) -->
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-
-                <!-- This template defines WHAT EACH ITEM in the list looks like -->
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:VehiculeBasic}">
-                        <!-- Simple border around each item -->
                         <Border BorderBrush="DarkGray" BorderThickness="1" Margin="10" Padding="10" Background="White" CornerRadius="8">
-                            <!-- Stack things vertically inside the border -->
                             <StackPanel Orientation="Vertical">
-                                <!-- Display the Image -->
-                                <!-- Source={Binding Image} means: get the 'Image' property from the current VehiculeBasic object -->
+                                <!-- Commented out Image -->
                                 <!-- <Image Source="{Binding Image}" MaxHeight="100" Margin="0,0,0,5" HorizontalAlignment="Left"/> -->
-
-                                <!-- Display the Name -->
-                                <!-- Text={Binding Nom} means: get the 'Nom' property from the current VehiculeBasic object -->
                                 <TextBlock Text="{Binding Nom}" FontWeight="Bold" FontSize="14" />
-
-                                <!-- Display the Size -->
                                 <TextBlock>
                                     <Run Text="Taille: "/>
                                     <Run Text="{Binding Taille}"/>
                                 </TextBlock>
-
-                                <!-- Display the Details -->
                                 <TextBlock Text="{Binding Details}" TextWrapping="Wrap" Margin="0,5,0,10"/>
-
-                                <!-- Area for Buttons -->
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <!-- Modifier Button -->
-                                    <!-- The Click event calls a method in our code-behind -->
-                                    <!-- Tag="{Binding}" stores the ACTUAL VehiculeBasic object associated with this button -->
                                     <Button Content="Modifier" Margin="0,0,5,0" Style="{StaticResource ModifyButtonStyle}"
                                             Click="ModifyButton_Click"
                                             Tag="{Binding}"/>
-
-                                    <!-- Supprimer Button -->
                                     <Button Content="Supprimer" Style="{StaticResource DeleteButtonStyle}"
                                             Click="DeleteButton_Click"
                                             Tag="{Binding}"/>
@@ -140,5 +170,24 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+
+        <!-- **** MODIFICATION START **** -->
+        <!-- Buttons Area in Grid Row 1 -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,10">
+            <!-- NEW Create Button -->
+            <Button x:Name="CreateButton"
+                    Content="Créer Véhicule"
+                    Margin="0,0,10,0"
+                    Style="{StaticResource CreateButtonStyle}"
+                    Click="CreateButton_Click"/>
+
+                <!-- Existing Seed Button -->
+                <Button x:Name="SeedButton"
+                    Content="Seeder la base de données"
+                    Style="{StaticResource SeedButtonStyle}"
+                    Click="SeedButton_Click"/>
+        </StackPanel>
+        <!-- **** MODIFICATION END **** -->
+
     </Grid>
 </UserControl>
