@@ -17,6 +17,8 @@
             <RowDefinition Height="*"/>
             <!-- Details -->
             <RowDefinition Height="Auto"/>
+            <!-- StartingPrice -->
+            <RowDefinition Height="Auto"/>
             <!-- Image Path Row -->
             <RowDefinition Height="Auto"/>
             <!-- Image Preview Row -->
@@ -45,10 +47,15 @@
         <TextBox x:Name="DetailsTextBox" Grid.Row="2" Grid.Column="1"
                  Margin="0,5,0,5"
                  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+        
+        <!-- StartingPrice -->
+        <Label Content="Prix de départ:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+        <TextBox x:Name="StartingPriceTextBox" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
 
         <!-- Image URL/Path -->
-        <Label Content="Image (Aperçu car pas encore implémenté):" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-        <Grid Grid.Row="3" Grid.Column="1">
+        <Label Content="Image (Aperçu car pas encore implémenté):" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+        <Grid Grid.Row="4" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>

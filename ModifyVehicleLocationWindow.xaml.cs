@@ -28,6 +28,9 @@ public class UpdateVehicleRequest
     [System.Text.Json.Serialization.JsonPropertyName("details")]
     public string Details { get; set; }
 
+    [System.Text.Json.Serialization.JsonPropertyName("startingprice")]
+    public string StartingPrice { get; set; }
+
     // No 'image' property here as requested
 }
 
@@ -67,6 +70,7 @@ namespace CMSLDF
             NomTextBox.Text = _vehicleToModify.Nom;
             TailleTextBox.Text = _vehicleToModify.Taille;
             DetailsTextBox.Text = _vehicleToModify.Details;
+            StartingPriceTextBox.Text = _vehicleToModify.StartingPrice;
             ImageTextBox.Text = _vehicleToModify.Image; // Load image path for local preview
 
             UpdateImagePreview(ImageTextBox.Text);
@@ -87,13 +91,15 @@ namespace CMSLDF
             _vehicleToModify.Nom = NomTextBox.Text;
             _vehicleToModify.Taille = TailleTextBox.Text;
             _vehicleToModify.Details = DetailsTextBox.Text;
+            _vehicleToModify.StartingPrice = StartingPriceTextBox.Text;
             // Update the local image path if changed, but it won't be sent to server
             _vehicleToModify.Image = ImageTextBox.Text;
 
             // Basic validation (optional, add more as needed)
             if (string.IsNullOrWhiteSpace(_vehicleToModify.Nom) ||
                 string.IsNullOrWhiteSpace(_vehicleToModify.Taille) ||
-                string.IsNullOrWhiteSpace(_vehicleToModify.Details)) 
+                string.IsNullOrWhiteSpace(_vehicleToModify.Details) ||
+                string.IsNullOrWhiteSpace(_vehicleToModify.StartingPrice)) 
 
             {
                 MessageBox.Show("Le nom, la taille, ou les détails ne peuvent pas être vides.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -154,7 +160,8 @@ namespace CMSLDF
                 {
                     Nom = vehicle.Nom,
                     Taille = vehicle.Taille,
-                    Details = vehicle.Details
+                    Details = vehicle.Details,
+                    StartingPrice = vehicle.StartingPrice
                 };
 
                 string jsonPayload = JsonSerializer.Serialize(updatePayload);
@@ -248,6 +255,7 @@ namespace CMSLDF
             NomTextBox.IsEnabled = !isLoading;
             TailleTextBox.IsEnabled = !isLoading;
             DetailsTextBox.IsEnabled = !isLoading;
+            StartingPriceTextBox.IsEnabled = !isLoading;
             ImageTextBox.IsEnabled = !isLoading;
             BrowseImageButton.IsEnabled = !isLoading;
             // Optionally show a progress indicator

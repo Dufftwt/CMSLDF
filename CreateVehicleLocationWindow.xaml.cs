@@ -26,6 +26,9 @@ public class CreateVehicleRequest
     [System.Text.Json.Serialization.JsonPropertyName("details")]
     public string Details { get; set; }
 
+    [System.Text.Json.Serialization.JsonPropertyName("startingprice")]
+    public string StartingPrice { get; set; }
+
     [System.Text.Json.Serialization.JsonPropertyName("image")]
     public string Image { get; set; } // Include the image property for the POST
 
@@ -70,6 +73,7 @@ namespace CMSLDF
                 Nom = NomTextBox.Text,
                 Taille = TailleTextBox.Text,
                 Details = DetailsTextBox.Text,
+                StartingPrice = StartingPriceTextBox.Text,
                 Image = PlaceholderImageUrl // Use the placeholder URL for creation
                 // Set other required properties if any
             };
@@ -77,9 +81,10 @@ namespace CMSLDF
             // Basic validation
             if (string.IsNullOrWhiteSpace(newVehicleData.Nom) ||
                 string.IsNullOrWhiteSpace(newVehicleData.Taille) ||
-                string.IsNullOrWhiteSpace(newVehicleData.Details))
+                string.IsNullOrWhiteSpace(newVehicleData.Details) ||
+                string.IsNullOrWhiteSpace(newVehicleData.StartingPrice))
             {
-                MessageBox.Show("Le nom, la taille et les détails ne peuvent pas être vides.", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Le nom, la taille, les détails et le prix de départ ne peuvent pas être vides.", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -215,6 +220,7 @@ namespace CMSLDF
             NomTextBox.IsEnabled = !isLoading;
             TailleTextBox.IsEnabled = !isLoading;
             DetailsTextBox.IsEnabled = !isLoading;
+            StartingPriceTextBox.IsEnabled = !isLoading;
             ImageTextBox.IsEnabled = !isLoading; // Keep enabled/disabled consistently
             BrowseImageButton.IsEnabled = !isLoading;
             // Optionally show a progress indicator

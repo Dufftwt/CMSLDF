@@ -22,6 +22,8 @@ namespace CMSLDF
         public string Taille { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("details")]
         public string Details { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("startingprice")]
+        public string StartingPrice { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("image")]
         public string Image { get; set; }
     }
